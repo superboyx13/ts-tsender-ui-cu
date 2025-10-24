@@ -1,0 +1,24 @@
+"use client"
+
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { type ReactNode } from "react";
+import config from "@/rainbowKitConfig";
+import { WagmiProvider } from "wagmi";
+import { RainbowKitProvider, ConnectButton } from "@rainbow-me/rainbowkit";
+import { useState } from "react";
+import "@rainbow-me/rainbowkit/styles.css";
+
+export function Providers(props: { children: ReactNode }) {
+    const [queryClient] = useState(() => new QueryClient())
+    return (
+        //Wagmi is used to connect to the blockchain
+        //RainbowKit is used to provide a wallet connection UI
+        <WagmiProvider config={config}>
+            <QueryClientProvider client={queryClient}>
+                <RainbowKitProvider>
+                    {props.children}
+                </RainbowKitProvider>
+            </QueryClientProvider>
+        </WagmiProvider>
+    )
+}
