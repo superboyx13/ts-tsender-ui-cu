@@ -85,14 +85,36 @@ export default function AirDropForm() {
 
     // Save to localStorage whenever form inputs change
     useEffect(() => {
-        const formData: StoredFormData = {
-            tokenAddress,
-            recipients,
-            amounts
-        };
+        const savedTokenAddress = localStorage.getItem('tokenAddress')
+        const savedRecipients = localStorage.getItem('recipients')
+        const savedAmounts = localStorage.getItem('amounts')
 
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
-    }, [tokenAddress, recipients, amounts]);
+        if (savedTokenAddress) setTokenAddress(savedTokenAddress)
+        if (savedRecipients) setRecipients(savedRecipients)
+        if (savedAmounts) setAmounts(savedAmounts)
+    }, [])
+
+    useEffect(() => {
+        localStorage.setItem('tokenAddress', tokenAddress)
+    }, [tokenAddress])
+
+    useEffect(() => {
+        localStorage.setItem('recipients', recipients)
+    }, [recipients])
+
+    useEffect(() => {
+        localStorage.setItem('amounts', amounts)
+    }, [amounts])
+
+    useEffect(() => {
+        const balanceResult = tokenData?.[2]?.result;
+        if (tokenAddress && total > 0 && balanceResult !== undefined) {
+            const userBalance = Number(balanceResult);
+            setHasEnoughTokens(userBalance >= total);
+        } else {
+            setHasEnoughTokens(true);
+        }
+    }, [tokenAddress, total, tokenData]);
 
 
     async function handleSubmit() {
@@ -122,7 +144,6 @@ export default function AirDropForm() {
                 functionName: "airdropERC20",
                 args: [
                     tokenAddress,
-                    // Comma or new line separated
                     recipients.split(/[,\n]+/).map(addr => addr.trim()).filter(addr => addr !== ''),
                     amounts.split(/[,\n]+/).map(amt => amt.trim()).filter(amt => amt !== ''),
                     BigInt(total),
@@ -136,7 +157,6 @@ export default function AirDropForm() {
                 functionName: "airdropERC20",
                 args: [
                     tokenAddress,
-                    // Comma or new line separated
                     recipients.split(/[,\n]+/).map(addr => addr.trim()).filter(addr => addr !== ''),
                     amounts.split(/[,\n]+/).map(amt => amt.trim()).filter(amt => amt !== ''),
                     BigInt(total),
@@ -144,31 +164,6 @@ export default function AirDropForm() {
             })
         }
     }
-
-    useEffect(() => {
-        const savedTokenAddress = localStorage.getItem('tokenAddress')
-        const savedRecipients = localStorage.getItem('recipients')
-        const savedAmounts = localStorage.getItem('amounts')
-
-        if (savedTokenAddress) setTokenAddress(savedTokenAddress)
-        if (savedRecipients) setRecipients(savedRecipients)
-        if (savedAmounts) setAmounts(savedAmounts)
-    }, [])
-
-    useEffect(() => {
-        localStorage.setItem('tokenAddress', tokenAddress)
-    }, [tokenAddress])
-
-    useEffect(() => {
-        localStorage.setItem('recipients', recipients)
-    }, [recipients])
-
-    useEffect(() => {
-        localStorage.setItem('amounts', amounts)
-    }, [amounts])
-
-
-
 
     return (
         <div>
