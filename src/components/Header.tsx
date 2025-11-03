@@ -14,11 +14,11 @@ export default function Header() {
                         href="https://github.com/superboyx13"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="p-2 rounded-full hover:bg-green-100 transition-colors"
+                        className="p-2 rounded-full hover:bg-blue-100 transition-colors"
                     >
                         <FaGithub size={24} />
                     </a>
-                    <h1 className="ml-2 text-2xl font-bold text-gray-900">tsender</h1>
+                    <h1 className="ml-2 text-2xl font-bold text-gray-900">TSender</h1>
                 </div>
             </div>
 
