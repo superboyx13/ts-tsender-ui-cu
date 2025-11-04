@@ -1,6 +1,8 @@
 import { describe, it, expect, vi } from 'vitest';
 import { calculateTotal } from './calculateTotal';
 
+
+// Test suite for calculateTotal utility function
 describe('calculateTotal', () => {
   it('should work with newlines', () => {
     expect(calculateTotal('100\n200\n300')).toBe(600);
