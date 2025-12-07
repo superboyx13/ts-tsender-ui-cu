@@ -1,4 +1,4 @@
-"use client"
+'use client';
 
 import { getDefaultConfig } from "@rainbow-me/rainbowkit"
 import { arbitrum, base, mainnet, optimism, anvil, zksync, sepolia } from "wagmi/chains"

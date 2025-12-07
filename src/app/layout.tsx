@@ -18,8 +18,6 @@ export default function RootLayout(props: { children: ReactNode }) {
   return (
     <html lang="en">
       <body>
-        <Analytics />
-        <SpeedInsights />
         <Providers>
           <Header />
           {props.children}
